@@ -29,7 +29,9 @@
         <tr>
             <td>
                 <br>
-                <img src="${judge.properties.photo.node.url}" width="156px"/>
+                <c:if test="${judge.properties.photo.node.url != null}">
+                    <img src="${judge.properties.photo.node.url}" width="156px"/>
+                </c:if>
             </td>
             <td>
                 <h3>${judge.properties.biography.string}</h3>

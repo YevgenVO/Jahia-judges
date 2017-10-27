@@ -8,7 +8,7 @@
  - yearOfRegistration (decimal, text)
  - canton (string)
  - partyBirth (date, datepicker)
- - court (string, choicelist) < 'CC', 'Ire CdS', 'IIe CdS', 'Ire CC', 'IIe CdP', 'Ire CdP', 'CdP + A', 'I. ZirA', 'CdP', 'CCP', 'StrA', 'II. ZirA', 'IIe CC'
+ - court (string, choicelist[resourceBundle]) < 'CC', 'Ire CdS', 'IIe CdS', 'Ire CC', 'IIe CdP', 'Ire CdP', 'CdPA', 'I. ZirA', 'CdP', 'CCP', 'StrA', 'II. ZirA', 'IIe CC'
  - parti (string, choicelist) < 'KK', 'PAI', 'DEM', 'PLS', 'PS', 'PRD', 'PDC', 'UDC', 'LDU'
  - deathDate (date, datepicker)
  - photo (weakreference, picker[type='image'])

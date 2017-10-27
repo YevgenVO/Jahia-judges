@@ -36,16 +36,16 @@
             <td>${judge.properties['name'].string}</td>
 
             <td><a onclick="window.open('${contentNode.url}judge2/judge-info.html?id=${judge.identifier}', 'newwindow',
-                    'width=800, height=400'); return false;" title="${judge.properties['Surname'].string}}"
+                    'width=800, height=400'); return false;" title="${judge.properties['Surname'].string}"
                    href="<c:url value="#" />">${judge.properties['Surname'].string}</a></td>
                 <%--<td>${judge.properties['Surname'].string}</td>--%>
             <td>${judge.properties['yearInOffice'].string}</td>
             <td>${judge.properties['yearOfRegistration'].string}</td>
             <td>${judge.properties['canton'].string}</td>
             <td>${judge.properties['parti'].string}</td>
-            <td>${judge.properties['court'].string}</td>
-            <fmt:formatDate var="deathDate" value="${judge.properties['deathDate'].date.time}" type="DATE" pattern="yyyy"/>
-            <fmt:formatDate var="birthDate" value="${judge.properties['partyBirth'].date.time}" type="DATE" pattern="yyyy"/>
+            <td><fmt:message key="jnt_judgeInform.court.${judge.properties.court.string}"/></td>
+            <fmt:formatDate var="deathDate" value="${judge.properties['deathDate'].date.time}" pattern="yyyy"/>
+            <fmt:formatDate var="birthDate" value="${judge.properties['partyBirth'].date.time}" pattern="yyyy"/>
             <td>${birthDate}-${deathDate}</td>
         </tr>
     </c:forEach>
