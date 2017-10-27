@@ -1,0 +1,20 @@
+<jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+<jnt = 'http://www.jahia.org/jahia/nt/1.0'>
+
+[jnt:judgeInform] > jnt:content, jmix:structuredContent
+ - name (string)
+ - Surname (string)
+ - yearInOffice (decimal, text)
+ - yearOfRegistration (decimal, text)
+ - canton (string)
+ - partyBirth (date, datepicker)
+ - court (string, choicelist) < 'CC', 'Ire CdS', 'IIe CdS', 'Ire CC', 'IIe CdP', 'Ire CdP', 'CdP + A', 'I. ZirA', 'CdP', 'CCP', 'StrA', 'II. ZirA', 'IIe CC'
+ - parti (string, choicelist) < 'KK', 'PAI', 'DEM', 'PLS', 'PS', 'PRD', 'PDC', 'UDC', 'LDU'
+ - deathDate (date, datepicker)
+ - photo (weakreference, picker[type='image'])
+ - biography (string, richtext) internationalized
+
+[jnt:judgeTable] > jnt:content, jmix:structuredContent
+
+[jnt:judgeView] > jnt:content, jmix:structuredContent
+
