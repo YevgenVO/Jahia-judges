@@ -18,14 +18,13 @@
 <%--@elvariable id="renderContext" type="org.jahia.services.render.RenderContext"--%>
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
-<c:choose>
-    <c:when test=" ${empty param.orderBy && empty param.orderType}">
-        <jcr:sql var="judgeList" sql="select * from [jnt:judgeInform]"/>
-    </c:when>
-    <c:otherwise>
-        <jcr:sql var="judgeList" sql="select * from [jnt:judgeInform] as j order by j.[${param.orderBy}] ${param.orderType}"/>
-    </c:otherwise>
-</c:choose>
+
+<c:if test="${orderBy == null || orderType == null}">
+    <jcr:sql var="judgeList" sql="select * from [jnt:judgeInform]"/>
+</c:if>
+<c:if  test=" ${!empty param.orderBy && !empty param.orderType}">
+    <jcr:sql var="judgeList" sql="select * from [jnt:judgeInform] as j order by j.[${param.orderBy}] ${param.orderType}"/>
+</c:if>
 <table>
     <tr style="">
         <th>Name</th>
@@ -53,8 +52,9 @@
         <th></th>
         <th></th>
     </tr>
-
     <c:forEach items="${judgeList.nodes}" var="judge">
+        <c:if test="${judge != null}">
+        <h1>judge.nodeType</h1>
         <tr height="100px">
             <td>${judge.properties['name'].string}</td>
 
@@ -71,5 +71,6 @@
             <fmt:formatDate var="birthDate" value="${judge.properties['partyBirth'].date.time}" pattern="yyyy"/>
             <td>${birthDate}-${deathDate}</td>
         </tr>
+        </c:if>
     </c:forEach>
 </table>
