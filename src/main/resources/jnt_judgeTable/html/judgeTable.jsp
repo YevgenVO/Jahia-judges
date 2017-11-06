@@ -19,7 +19,7 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <c:choose>
-    <c:when test="${param.orderBy} == null || ${param.orderType} == null">
+    <c:when test=" ${empty param.orderBy && empty param.orderType}">
         <jcr:sql var="judgeList" sql="select * from [jnt:judgeInform]"/>
     </c:when>
     <c:otherwise>
@@ -38,16 +38,16 @@
         <th>Birth/Death date</th>
     </tr>
     <tr style="">
-        <th><a href="${contentNode.url}?orderBy=name&orderType=asc" style="text-decoration: none;"><span>&#8593;</span></a><a
-                href="${contentNode.url}?orderBy=name&orderType=desc" style="text-decoration: none;"><span>&#8595;</span></a>
+        <th><a href="${contentNode.url}?orderBy=name&orderType=desc" style="text-decoration: none;"><span>&#8593;</span></a><a
+                href="${contentNode.url}?orderBy=name&orderType=asc" style="text-decoration: none;"><span>&#8595;</span></a>
         </th>
         <th></th>
-        <th><a href="${contentNode.url}?orderBy=yearInOffice&orderType=asc" style="text-decoration: none;"><span>&#8593;</span></a><a
-                href="${contentNode.url}?orderBy=yearInOffice&orderType=desc" style="text-decoration: none;"><span>&#8595;</span></a>
+        <th><a href="${contentNode.url}?orderBy=yearInOffice&orderType=desc" style="text-decoration: none;"><span>&#8593;</span></a><a
+                href="${contentNode.url}?orderBy=yearInOffice&orderType=asc" style="text-decoration: none;"><span>&#8595;</span></a>
         </th>
         <th></th>
-        <th><a href="${contentNode.url}?orderBy=canton&orderType=asc" style="text-decoration: none;"><span>&#8593;</span></a><a
-                href="${contentNode.url}?orderBy=canton&orderType=desc" style="text-decoration: none;"><span>&#8595;</span></a>
+        <th><a href="${contentNode.url}?orderBy=canton&orderType=desc" style="text-decoration: none;"><span>&#8593;</span></a><a
+                href="${contentNode.url}?orderBy=canton&orderType=asc" style="text-decoration: none;"><span>&#8595;</span></a>
         </th>
         <th></th>
         <th></th>
