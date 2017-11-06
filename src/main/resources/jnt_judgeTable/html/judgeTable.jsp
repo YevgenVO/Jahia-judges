@@ -18,10 +18,16 @@
 <%--@elvariable id="renderContext" type="org.jahia.services.render.RenderContext"--%>
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
-
-<jcr:sql var="judgeList" sql="select * from [jnt:judgeInform]" />
+<c:choose>
+    <c:when test="${param.orderBy} == null || ${param.orderType} == null">
+        <jcr:sql var="judgeList" sql="select * from [jnt:judgeInform]"/>
+    </c:when>
+    <c:otherwise>
+        <jcr:sql var="judgeList" sql="select * from [jnt:judgeInform] as j order by j.[${param.orderBy}] ${param.orderType}"/>
+    </c:otherwise>
+</c:choose>
 <table>
-    <tr style="text">
+    <tr style="">
         <th>Name</th>
         <th>Surname</th>
         <th>Year in office</th>
@@ -31,6 +37,23 @@
         <th>Court</th>
         <th>Birth/Death date</th>
     </tr>
+    <tr style="">
+        <th><a href="${contentNode.url}?orderBy=name&orderType=asc" style="text-decoration: none;"><span>&#8593;</span></a><a
+                href="${contentNode.url}?orderBy=name&orderType=desc" style="text-decoration: none;"><span>&#8595;</span></a>
+        </th>
+        <th></th>
+        <th><a href="${contentNode.url}?orderBy=yearInOffice&orderType=asc" style="text-decoration: none;"><span>&#8593;</span></a><a
+                href="${contentNode.url}?orderBy=yearInOffice&orderType=desc" style="text-decoration: none;"><span>&#8595;</span></a>
+        </th>
+        <th></th>
+        <th><a href="${contentNode.url}?orderBy=canton&orderType=asc" style="text-decoration: none;"><span>&#8593;</span></a><a
+                href="${contentNode.url}?orderBy=canton&orderType=desc" style="text-decoration: none;"><span>&#8595;</span></a>
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+
     <c:forEach items="${judgeList.nodes}" var="judge">
         <tr height="100px">
             <td>${judge.properties['name'].string}</td>

@@ -7,25 +7,26 @@
               j:title="judges"
               jcr:mixinTypes="jmix:hasExternalProviderExtension"
               jcr:primaryType="jnt:module">
-                <sources jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                <sources jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                   jcr:primaryType="jnt:moduleVersionFolder"
                   j:staticMountPointProviderKey="module-judges-1.0-SNAPSHOT">
-                    <src jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                    <src jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                  jcr:primaryType="jnt:folder">
-                        <main jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                        <main jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                      jcr:primaryType="jnt:folder">
-                            <resources jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                            <resources jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                              jcr:primaryType="jnt:folder">
-                                <jnt_judgeTable jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                                <jnt_judgeTable jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                                      jcr:primaryType="jnt:nodeTypeFolder">
-                                    <html jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                                    <html jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                               jcr:primaryType="jnt:templateTypeFolder">
-                                        <judgeTable.jsp jcr:primaryType="jnt:viewFile"/>
+                                        <judgeTable.jsp jcr:mixinTypes="jmix:sourceControl" jcr:primaryType="jnt:viewFile"/>
                                     </html>
                                 </jnt_judgeTable>
-                                <META-INF jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                                <META-INF jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                                jcr:primaryType="jnt:metaInfFolder">
-                                    <definitions.cnd jcr:primaryType="jnt:definitionFile"/>
+                                    <definitions.cnd jcr:mixinTypes="jmix:sourceControl"
+                                         jcr:primaryType="jnt:definitionFile"/>
                                 </META-INF>
                                 <jnt_judgeView jcr:mixinTypes="jmix:hasExternalProviderExtension"
                                     jcr:primaryType="jnt:nodeTypeFolder">
