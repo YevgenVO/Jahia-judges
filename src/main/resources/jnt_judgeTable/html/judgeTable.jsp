@@ -18,12 +18,14 @@
 <%--@elvariable id="renderContext" type="org.jahia.services.render.RenderContext"--%>
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
-
+<c:set var="orderBy" value="${param.orderBy}"/>
+<c:set var="orderType" value="${param.orderType}"/>
 <c:if test="${orderBy == null || orderType == null}">
     <jcr:sql var="judgeList" sql="select * from [jnt:judgeInform]"/>
 </c:if>
-<c:if  test=" ${!empty param.orderBy && !empty param.orderType}">
-    <jcr:sql var="judgeList" sql="select * from [jnt:judgeInform] as j order by j.[${param.orderBy}] ${param.orderType}"/>
+<c:if test="${orderBy != null || orderType != null}">
+    <jcr:sql var="judgeList"
+             sql="select * from [jnt:judgeInform] as j order by j.[${param.orderBy}] ${param.orderType}"/>
 </c:if>
 <table>
     <tr style="">
@@ -45,16 +47,16 @@
                 href="${contentNode.url}?orderBy=yearInOffice&orderType=asc" style="text-decoration: none;"><span>&#8595;</span></a>
         </th>
         <th></th>
-        <th><a href="${contentNode.url}?orderBy=canton&orderType=desc" style="text-decoration: none;"><span>&#8593;</span></a><a
-                href="${contentNode.url}?orderBy=canton&orderType=asc" style="text-decoration: none;"><span>&#8595;</span></a>
+        <th><a href="${contentNode.url}?orderBy=canton&orderType=desc"
+               style="text-decoration: none;"><span>&#8593;</span></a><a
+                href="${contentNode.url}?orderBy=canton&orderType=asc"
+                style="text-decoration: none;"><span>&#8595;</span></a>
         </th>
         <th></th>
         <th></th>
         <th></th>
     </tr>
     <c:forEach items="${judgeList.nodes}" var="judge">
-        <c:if test="${judge != null}">
-        <h1>judge.nodeType</h1>
         <tr height="100px">
             <td>${judge.properties['name'].string}</td>
 
@@ -71,6 +73,10 @@
             <fmt:formatDate var="birthDate" value="${judge.properties['partyBirth'].date.time}" pattern="yyyy"/>
             <td>${birthDate}-${deathDate}</td>
         </tr>
-        </c:if>
     </c:forEach>
+
 </table>
+<form action="${url.base}${currentNode.path}.ReverseNames.do" method="post"
+      id="judges-names-revers">
+    <button>Reverse!</button>
+</form>

@@ -8,7 +8,7 @@
  - yearOfRegistration (decimal, text) < '[1800, 2200]'
  - canton (string) mandatory
  - partyBirth (date, datepicker) mandatory < '[1799-12-31T23:59:59.998+12:00, 2200-12-31T23:59:59.999-00:00]'
- - court (string, choicelist[resourceBundle]) < 'CC', 'Ire CdS', 'IIe CdS', 'Ire CC', 'IIe CdP', 'Ire CdP', 'CdPA', 'I. ZirA', 'CdP', 'CCP', 'StrA', 'II. ZirA', 'IIe CC'
+ - court (string, choicelist[resourceBundle]) < 'CC', 'IreCdS', 'IIeCdS', 'IreCC', 'IIeCdP', 'IreCdP', 'CdPA', 'IZirA', 'CdP', 'CCP', 'StrA', 'IIZirA', 'IIeCC'
  - parti (string, choicelist) < 'KK', 'PAI', 'DEM', 'PLS', 'PS', 'PRD', 'PDC', 'UDC', 'LDU'
  - deathDate (date, datepicker)
  - photo (weakreference, picker[type='image'])
