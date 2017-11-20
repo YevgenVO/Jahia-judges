@@ -1,0 +1,33 @@
+package org.jahia.modules.judges.rules
+
+// list any import classes here.
+import org.jahia.services.content.rules.*
+import org.jahia.services.content.JCRContentUtils
+import org.slf4j.Logger
+//import journalist.actions.*;
+
+expander rules.dsl
+
+// declare any global variables here
+global User user
+global Service service
+global Logger logger
+global JCRContentUtils jcrUtils
+global journalist.actions.UserDao userDao
+
+rule "Creat new User"
+    when
+        A new node is created
+                    - it has the type jnt:jurnalistData
+    then
+        Log "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Creat new User" + node.getName()
+        User node
+end
+
+rule "Delete or update User"
+    when
+        A node is published
+                - it has the type jnt:jurnalistData
+    then
+        UpdateJournalist node
+end

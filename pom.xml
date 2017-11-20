@@ -66,6 +66,14 @@
         <developerConnection>scm:dummy:uri</developerConnection>
     </scm>
 
+    <properties>
+        <jahia.modules.importPackage>org.jahia.defaults.config.spring,
+            org.jahia.exceptions,
+            org.jahia.services,
+            org.jahia.services.search</jahia.modules.importPackage>
+        <jahia-depends>default,bootstrap,bootstrap-components,event,facets,search,siteSettings,tasks,teasers,form-factory-core</jahia-depends>
+    </properties>
+
     <repositories>
         <repository>
             <releases>
