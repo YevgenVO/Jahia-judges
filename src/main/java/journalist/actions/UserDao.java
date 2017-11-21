@@ -19,9 +19,9 @@ public final class UserDao {
 
     private static Logger LOG = LoggerFactory.getLogger(UserDao.class);
 
-    private JahiaUserManagerService userManagerService = JahiaUserManagerService.getInstance();
+    private static JahiaUserManagerService userManagerService = JahiaUserManagerService.getInstance();
 
-    private JCRPublicationService publicationService = JCRPublicationService.getInstance();
+    private static JCRPublicationService publicationService = JCRPublicationService.getInstance();
 
     public void createUser(AddedNodeFact addedNodeFact) throws RepositoryException {
         JCRSessionWrapper session = JCRSessionFactory.getInstance()
@@ -49,11 +49,7 @@ public final class UserDao {
         JCRNodeWrapper user = getJournalistUser(journalist.getPropertyAsString("userUUID"), session);
 
         if (nodeTypes.contains("jmix:markedForDeletion")) {
-            String userName = user.getPropertyAsString("Name");
-            userManagerService.deleteUser(user.getPath(), session);
-            session.refresh(true);
-            session.save();
-            LOG.info("User with name'" + userName + "' have been deleted.");
+            deleteUser(user, session);
         } else {
             Properties properties = getPropertiesFromNode(journalist);
             for (String key : properties.stringPropertyNames()) {
@@ -78,7 +74,7 @@ public final class UserDao {
         return properties;
     }
 
-    private JCRNodeWrapper getJournalistUser(String uuid, JCRSessionWrapper session) throws RepositoryException {
+    public static JCRNodeWrapper getJournalistUser(String uuid, JCRSessionWrapper session) throws RepositoryException {
         JCRNodeWrapper user = null;
         Query query;
         if (uuid != null) {
@@ -87,5 +83,13 @@ public final class UserDao {
             user = (JCRNodeWrapper) query.execute().getNodes().nextNode();
         }
         return user;
+    }
+
+    public static boolean deleteUser(JCRNodeWrapper user, JCRSessionWrapper session) throws RepositoryException {
+        boolean returnValue = userManagerService.deleteUser(user.getPath(), session);
+        session.refresh(true);
+        session.save();
+        LOG.info("User with name'" + user.getPropertyAsString("Name") + "' have been deleted.");
+        return returnValue;
     }
 }

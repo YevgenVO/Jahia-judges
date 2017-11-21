@@ -38,4 +38,5 @@
  - userUUID (string) hidden
  - state (string, choicelist[resourceBundle]) = 'active' analyzer=keyword nofulltext < 'active', 'started', 'finished', 'suspended'
  - uuid (string) hidden
+ - disabled (boolean) = 'false'
 
