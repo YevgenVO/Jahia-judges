@@ -29,7 +29,7 @@ public final class UserDao {
         JCRNodeWrapper journalistNode = addedNodeFact.getNode();
         Properties properties = getPropertiesFromNode(journalistNode);
 
-        JCRNodeWrapper user = userManagerService.createUser(journalistNode.getPropertyAsString("Name"),
+        JCRNodeWrapper user = userManagerService.createUser(journalistNode.getName(),
                 properties.getProperty("Password"), properties, session);
         journalistNode.setProperty("userUUID", user.getUUID());
         user.getSession().refresh(true);
@@ -50,6 +50,7 @@ public final class UserDao {
 
         if (nodeTypes.contains("jmix:markedForDeletion")) {
             String userName = user.getPropertyAsString("Name");
+            userManagerService.deleteUser(user.getPath(), session);
             session.refresh(true);
             session.save();
             LOG.info("User with name'" + userName + "' have been deleted.");
