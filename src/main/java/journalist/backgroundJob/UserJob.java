@@ -1,5 +1,6 @@
 package journalist.backgroundJob;
 
+import journalist.actions.UserDao;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.content.JCRSessionFactory;
 import org.jahia.services.content.JCRSessionWrapper;
@@ -36,8 +37,8 @@ public class UserJob extends BackgroundJob {
                 String userName = "";
                 String journalistName = "";
                 if (userUUID != null && userUUID != "") {
-                    JCRNodeWrapper userLive = getNodeByUUID(userUUID, liveSession);
-                    JCRNodeWrapper userdefault = getNodeByUUID(userUUID, defaultSession);
+                    JCRNodeWrapper userLive = UserDao.getJournalistUser(userUUID, liveSession);
+                    JCRNodeWrapper userdefault = UserDao.getJournalistUser(userUUID, defaultSession);
                     if (userLive != null) {
                         userName = userLive.getName();
                         userLive.remove();

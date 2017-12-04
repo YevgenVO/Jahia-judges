@@ -85,12 +85,13 @@ public final class UserDao {
         JCRNodeWrapper user = userManagerService.createUser(journalistNode.getName(),
                 properties.getProperty("Password"), properties, session);
         journalistNode.setProperty("userUUID", user.getUUID());
+        journalistNode.saveSession();
         user.getSession().refresh(true);
         user.getSession().save();
         session.refresh(true);
         session.save();
         publicationService.publishByMainId(journalistNode.getUUID());
         publicationService.publishByMainId(user.getUUID());
-        LOG.info("New User with name'" + user.getName() + "' have been created.");
+        LOG.info("New User with name' " + user.getName() + "' have been created.");
     }
 }
