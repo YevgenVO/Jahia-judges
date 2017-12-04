@@ -23,22 +23,13 @@ public final class UserDao {
 
     private static JCRPublicationService publicationService = JCRPublicationService.getInstance();
 
-    public void createUser(AddedNodeFact addedNodeFact) throws RepositoryException {
-        JCRSessionWrapper session = JCRSessionFactory.getInstance()
-                .getCurrentSystemSession("default", null, null);
-        JCRNodeWrapper journalistNode = addedNodeFact.getNode();
-        Properties properties = getPropertiesFromNode(journalistNode);
-
-        JCRNodeWrapper user = userManagerService.createUser(journalistNode.getName(),
-                properties.getProperty("Password"), properties, session);
-        journalistNode.setProperty("userUUID", user.getUUID());
-        user.getSession().refresh(true);
-        user.getSession().save();
+    public static boolean deleteUser(JCRNodeWrapper user, JCRSessionWrapper session) throws RepositoryException {
+        String name = user.getPropertyAsString("Name");
+        boolean returnValue = userManagerService.deleteUser(user.getPath(), session);
         session.refresh(true);
         session.save();
-        publicationService.publishByMainId(journalistNode.getUUID());
-        publicationService.publishByMainId(user.getUUID());
-        LOG.info("New User with name'" + journalistNode.getPropertyAsString("Name") + "' have been created.");
+        LOG.info("User with name '" + name + "' have been deleted.");
+        return returnValue;
     }
 
     public void modify(PublishedNodeFact publishedNodeFact) throws RepositoryException {
@@ -85,11 +76,21 @@ public final class UserDao {
         return user;
     }
 
-    public static boolean deleteUser(JCRNodeWrapper user, JCRSessionWrapper session) throws RepositoryException {
-        boolean returnValue = userManagerService.deleteUser(user.getPath(), session);
+    public void createUser(AddedNodeFact addedNodeFact) throws RepositoryException {
+        JCRSessionWrapper session = JCRSessionFactory.getInstance()
+                .getCurrentSystemSession("default", null, null);
+        JCRNodeWrapper journalistNode = addedNodeFact.getNode();
+        Properties properties = getPropertiesFromNode(journalistNode);
+
+        JCRNodeWrapper user = userManagerService.createUser(journalistNode.getName(),
+                properties.getProperty("Password"), properties, session);
+        journalistNode.setProperty("userUUID", user.getUUID());
+        user.getSession().refresh(true);
+        user.getSession().save();
         session.refresh(true);
         session.save();
-        LOG.info("User with name'" + user.getPropertyAsString("Name") + "' have been deleted.");
-        return returnValue;
+        publicationService.publishByMainId(journalistNode.getUUID());
+        publicationService.publishByMainId(user.getUUID());
+        LOG.info("New User with name'" + user.getName() + "' have been created.");
     }
 }
