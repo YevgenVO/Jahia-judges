@@ -33,14 +33,16 @@ public class UserJob extends BackgroundJob {
 
             if (journalist.getPropertyAsString("disabled") == "true") {
                 String userUUID = journalist.getPropertyAsString("userUUID");
-                JCRNodeWrapper userLive = getNodeByUUID(userUUID, liveSession);
-                JCRNodeWrapper userdefault = getNodeByUUID(userUUID, defaultSession);
                 String userName = "";
                 String journalistName = "";
-                if (userLive != null) {
-                    userName = userLive.getName();
-                    userLive.remove();
-                    userdefault.remove();
+                if (userUUID != null && userUUID != "") {
+                    JCRNodeWrapper userLive = getNodeByUUID(userUUID, liveSession);
+                    JCRNodeWrapper userdefault = getNodeByUUID(userUUID, defaultSession);
+                    if (userLive != null) {
+                        userName = userLive.getName();
+                        userLive.remove();
+                    }
+                    if (userdefault != null) userdefault.remove();
                 }
                 if (journalist != null) {
                     journalistName = journalist.getPropertyAsString("Name");
