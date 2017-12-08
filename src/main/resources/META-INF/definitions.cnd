@@ -40,3 +40,5 @@
  - uuid (string) hidden
  - disabled (boolean) = 'false'
 
+[jnt:editJournalistForm] > jnt:content, jmix:formContent
+
