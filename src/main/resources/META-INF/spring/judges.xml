@@ -5,7 +5,9 @@
     <bean id="reverseNames" class="actions.ReverseNames">
         <!--<property name="name" value="value"/>-->
     </bean>
-    <bean id="editJournalist" class="actions.EditJournalist"/>
+    <bean id="editJournalist" class="actions.EditJournalist">
+        <property name="mailService" ref="MailService"/>
+    </bean>
     <bean class="org.jahia.services.content.rules.ModuleGlobalObject">
         <property name="globalRulesObject">
             <map>

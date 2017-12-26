@@ -1,0 +1,21 @@
+_____________________________________________
+<h4>This is an automatic generated letter</h4>
+_____________________________________________
+<div class="letter">
+    <h5>Title:</h5><span>$Title</span>
+    <h5>Academic title:</h5><span>$AcademicTitle</span>
+    <h5>Name:</h5><span>$Name</span>
+    <h5>Surname:</h5><span>$Surname</span>
+    <h5>Address:</h5><span>$Adress</span>
+    <h5>Postal code:</h5><span>$NPA</span>
+    <h5>Place:</h5><span>$Place</span>
+    <h5>Phone number:</h5><span>$PhoneNum</span>
+    <h5>Mobile number:</h5><span>$CellphoneNumber</span>
+    <h5>Email (s):</h5><span>$Email</span>
+    #if($AdditionalEmail)
+        #foreach($email in $AdditionalEmail.split(" "))
+            <span style="text-indent: 20px;">$email</span>
+        #end
+    #end
+</div>
+<h4>Best Regards,<br>Administration!</h4>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="title">
+    <h1>Edition de mon profil</h1>
+    <form action="#" method="post" onsubmit="return validateForm()">
+        <div id="change_password">
+            <h3>Mot de pase</h3>
+            <div id="pass_fields">
+                <ul style="list-style-type: none;">
+                    <h1 id="errorMessage" style="color:red;font-size:20px;">!!!!</h1>
+                    <li>
+                        <label>Mot de passe existant</label>
+                        <input type="password" id="oldPassword" value="sometext">
+                    </li>
+                    <li>
+                        <label>nouveau mot de passe</label>
+                        <input type="password" id="newPassword" value="sometext">
+                    </li>
+                    <li>
+                        <label>Verifier votre nouveau mot de passe</label>
+                        <input type="password" id="passConfirmation" value="sometext">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="acriditation">
+            <h3>Mon profil d`accreditation</h3>
+            <h6 class="left">Journaux concernes</h6>
+            <h6 class="left">Langue de travail *</h6>
+            <ul style="list-style-type: none;">
+                <li><input type="checkbox" class="left"><label>Allemand</label></li>
+                <li><input type="checkbox" class="left"><label>Francais</label></li>
+                <li><input type="checkbox" class="left"><label>Italien</label></li>
+            </ul>
+        </div>
+        <div id="coordonnees">
+            <h3>Vos coordonnees</h3>
+            <ul style="list-style-type: none;">
+                <li><label class="left">Titre: </label><label>${Title.string}</label></li>
+                <li><label class="left">Titre academique: </label><label>${AcademicTitle.string}</label></li>
+                <li><label class="left">Prenom: </label><label>${Surname.string}</label></li>
+                <li><label class="left">Nom: </label><label>${Name.string}</label></li>
+                <li><label class="left">Adresse *</label><input name="Adress" id="Address" type="text" value="${Adress.string}"
+                                                                class="right"/></li>
+                <li><label class="left">NPA *</label><input name="NPA" id="NPA" type="text" value="${NPA.string}" class="right"/>
+                </li>
+                <li><label class="left">Lieu *</label><input name="Place" id="Place" type="text" value="${Place.string}"
+                                                             class="right"/></li>
+                <li><label class="left">No telephone</label><input name="PhoneNum" id="PhoneNum" type="text"
+                                                                   value="${PhoneNum.string}" class="right"/></li>
+                <li><label class="left">No telephone partable</label><input name="CellphoneNumber" id="celPhone" type="text"
+                                                                            value="${CellphoneNumber.string}"
+                                                                            class="right"/></li>
+                <li><label class="left">Email *</label><input name="email" type="email" id="email" value=""
+                                                              class="right"/></li>
+                <li><label class="left"></label><input type="text" value="" class="right"/></li>
+                <li><label class="left"></label><input type="text" value="" class="right"/></li>
+            </ul>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        document.getElementById("errorMessage").innerHTML = "";
+        var returnResult= true;
+        var oldPassword = document.getElementById("oldPassword").value;
+        var newPassword = document.getElementById("newPassword").value;
+        var passConfirmation = document.getElementById("passConfirmation").value;
+        var adress = document.getElementById("Address").value;
+        var npa = document.getElementById("NPA").value;
+        var Place = document.getElementById("Place").value;
+        var email = document.getElementById("email").value;
+        var npaValidation = /\d+/;
+        if (oldPassword != "${Password.string}") {
+            document.getElementById("errorMessage").innerHTML += "Wrong password!";
+            returnResult=false;
+        }
+        if (email != "") {
+            document.getElementById("errorMessage").innerHTML += "Email field is mandatory!";
+            returnResult=false;
+        }
+        if (newPassword != passConfirmation) {
+            document.getElementById("errorMessage").innerHTML += "<br>Wrong confirmation!!!";
+            returnResult=false;
+        }
+        if (adress.length < 6) {
+            document.getElementById("errorMessage").innerHTML += "</br>Address field is mandatory and must be longer then 5 symbols!";
+            returnResult=false;
+        }
+        if (!npaValidation.test(npa)) {
+            document.getElementById("errorMessage").innerHTML += "</br>NPA field is mandatory and must integer!";
+            returnResult=false;
+        }
+        if (Place.length < 6) {
+            document.getElementById("errorMessage").innerHTML += "</br>Place field is mandatory and must be longer then 5 symbols!";
+            returnResult=false;
+        }
+            return returnResult;
+        }
+</script>
+</body>
+</html>

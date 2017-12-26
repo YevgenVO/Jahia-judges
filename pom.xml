@@ -74,6 +74,14 @@
         <jahia-depends>default,bootstrap,bootstrap-components,event,facets,search,siteSettings,tasks,teasers,form-factory-core</jahia-depends>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.20</version>
+        </dependency>
+    </dependencies>
+
     <repositories>
         <repository>
             <releases>
