@@ -25,13 +25,14 @@
                                 </jnt_judgeTable>
                                 <META-INF jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                                jcr:primaryType="jnt:metaInfFolder">
-                                    <definitions.cnd jcr:primaryType="jnt:definitionFile"/>
+                                    <definitions.cnd jcr:mixinTypes="jmix:sourceControl"
+                                         jcr:primaryType="jnt:definitionFile"/>
                                 </META-INF>
-                                <jnt_judgeView jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                                <jnt_judgeView jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                                     jcr:primaryType="jnt:nodeTypeFolder">
-                                    <html jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                                    <html jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                               jcr:primaryType="jnt:templateTypeFolder">
-                                        <judgeView.jsp jcr:primaryType="jnt:viewFile"/>
+                                        <judgeView.jsp jcr:mixinTypes="jmix:sourceControl" jcr:primaryType="jnt:viewFile"/>
                                     </html>
                                 </jnt_judgeView>
                             </resources>

@@ -6,6 +6,7 @@ import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.content.JCRPublicationService;
 import org.jahia.services.content.JCRSessionWrapper;
 import org.jahia.services.mail.MailService;
+import org.jahia.services.query.QueryResultWrapper;
 import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
 import org.jahia.services.render.URLResolver;
@@ -43,8 +44,6 @@ public class EditJournalist extends Action {
     public ActionResult doExecute(HttpServletRequest request, RenderContext renderContext, Resource resource,
                                   JCRSessionWrapper session, Map<String, List<String>> map,
                                   URLResolver urlResolver) throws Exception {
-
-        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!inside doExecute()");
         ActionResult result= new ActionResult(HttpServletResponse.SC_OK, request.getParameter("currentPageUrl"));
 
         String query = "select * from [jnt:jurnalistData] where [jcr:uuid]='" + request.getParameter("uuid") + "'";
@@ -93,23 +92,34 @@ public class EditJournalist extends Action {
                 (Set)null, true, (List)null);
         publicationService.publishByMainId(journalistNode.getUUID());
         LOG.info("Journalist with name " + journalistNode.getPropertyAsString("Name") + " have been modified!");
-        sendMail(journalistNode, resource);
+        sendMail(journalistNode, resource, session, request.getParameter("mailSenderData"));
         return result;
     }
 
-    private void sendMail(JCRNodeWrapper journalist, Resource resource) throws RepositoryException, ScriptException {
-        Set<String> emails = new HashSet<>();
-        emails.addAll(Arrays.asList(journalist.getPropertyAsString("AdditionalEmail").split(" ")));
-        emails.add(journalist.getPropertyAsString("Email"));
-        String from = "no-reply@bger.ch";
-//        String from = mailService.getSettings().getFrom();
-        String templatePath = "resources/templates/journalist-edit-mail.vm";
-        String templateName = "judges";
-        Map<String, Object> bindings = new HashMap<>();
-        bindings.putAll(journalist.getPropertiesAsString());
-        for (String to: emails) {
-            mailService.sendMessageWithTemplate(templatePath, bindings, to, from, "", "", resource.getLocale(), templateName);
-            LOG.info("Mail to " + to + " have been sent!");
+    private void sendMail(JCRNodeWrapper journalist, Resource resource, JCRSessionWrapper session, String mailSenderData) throws RepositoryException, ScriptException {
+        LOG.info("select * from [jnt:mailSenderData] where [j:nodename] = '" + mailSenderData + "'");
+        String query = "select * from [jnt:mailSenderData] where [j:nodename] = '" + mailSenderData + "'";
+        QueryResultWrapper queryWrapper = session.getWorkspace().getQueryManager().
+                createQuery(query, Query.JCR_SQL2).execute();
+        if (queryWrapper.getNodes().hasNext()) {
+            JCRNodeWrapper mailTemplate = (JCRNodeWrapper) queryWrapper.getNodes().next();
+            Set<String> emails = new HashSet<>();
+            emails.addAll(Arrays.asList(journalist.getPropertyAsString("AdditionalEmail").split(" ")));
+            emails.add(journalist.getPropertyAsString("Email"));
+            String from = mailTemplate.getPropertyAsString("from");
+
+            String templatePath = "resources/templates/journalist-edit-mail.vm";
+            String templateName = "judges";
+            Map<String, Object> bindings = new HashMap<>();
+            bindings.put("subject", mailTemplate.getPropertyAsString("subject"));
+            bindings.put("header", mailTemplate.getPropertyAsString("header"));
+            bindings.put("footer", mailTemplate.getPropertyAsString("footer"));
+            bindings.put("body", mailTemplate.getPropertyAsString("body"));
+            bindings.putAll(journalist.getPropertiesAsString());
+            for (String to : emails) {
+                mailService.sendMessageWithTemplate(templatePath, bindings, to, from, "", "", resource.getLocale(), templateName);
+                LOG.info("Mail to " + to + " have been sent!");
+            }
         }
     }
 }

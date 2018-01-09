@@ -42,3 +42,15 @@
 
 [jnt:editJournalistForm] > jnt:content, jmix:formContent
 
+
+[jnt:mailSenderData] > jnt:content, jmix:dropContent
+ - from (string) mandatory
+ - header (string)
+ - footer (string)
+ - subject (string)
+ - body (string)
+
+[jnt:changeJournalistProperty] > jnt:content, jmix:dropContent
+ - journalistName (string) mandatory
+ - journalistPropertyName (string) mandatory
+ - journalistPropertyValue (string) mandatory

@@ -9,6 +9,7 @@
 <%@ taglib prefix="query" uri="http://www.jahia.org/tags/queryLib" %>
 <%@ taglib prefix="utility" uri="http://www.jahia.org/tags/utilityLib" %>
 <%@ taglib prefix="s" uri="http://www.jahia.org/tags/search" %>
+<%@ taglib prefix="ost" uri="http://www.ye.ost/jahia/training/tags/ost" %>
 <%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
 <%--@elvariable id="out" type="java.io.PrintWriter"--%>
 <%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
@@ -19,39 +20,43 @@
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 
 <c:set var="userKey" value="${renderContext.user.userKey}"/>
-<jcr:sql var="userQuery" sql="select * from [jnt:user] as u where ISDESCENDANTNODE(u, '${userKey}')"/>
+<jcr:sql var="userQuery" sql="select * from [jnt:user] as u where ISDESCENDANTNODE(u, '/users')"/>
 <c:forEach items="${userQuery.nodes}" var="element">
-    <c:set var="user" value="${element}"/>
+    <%--<c:if test="${element.path == '/users/ci/ii/ee/journalist-data'}">--%>
+        <c:if test="${element.path == userKey}">
+        <c:set var="user" value="${element}"/>
+    </c:if>
 </c:forEach>
-<jcr:sql var="queryResult"
-         sql="select * from [jnt:jurnalistData] as j where j.[userUUID]='07e7ffa8-3267-4c81-b225-98ad13baf2d5'"/>
-<%--<jcr:sql var="queryResult"  sql="select * from [jnt:jurnalistData] as j where j.[userUUID]='${user.uuid}'"/>--%>
+<%--<jcr:sql var="queryResult"--%>
+         <%--sql="select * from [jnt:jurnalistData] as j where j.[userUUID]='07e7ffa8-3267-4c81-b225-98ad13baf2d5'"/>--%>
+<jcr:sql var="queryResult" sql="select * from [jnt:jurnalistData] as j where j.[userUUID]='${user.identifier}'"/>
 <c:forEach items="${queryResult.nodes}" var="element">
     <c:set var="journalist" value="${element}"/>
 </c:forEach>
-<jcr:nodeProperty node="${journalist}" name="Title" var="Title"/>
-<jcr:nodeProperty node="${journalist}" name="AcademicTitle" var="AcademicTitle"/>
-<jcr:nodeProperty node="${journalist}" name="Languages" var="languages"/>
-<jcr:nodeProperty node="${journalist}" name="Email" var="email"/>
-<jcr:nodeProperty node="${journalist}" name="Name" var="Name"/>
-<jcr:nodeProperty node="${journalist}" name="Surname" var="Surname"/>
-<jcr:nodeProperty node="${journalist}" name="Adress" var="Adress"/>
-<jcr:nodeProperty node="${journalist}" name="NPA" var="NPA"/>
-<jcr:nodeProperty node="${journalist}" name="Place" var="Place"/>
-<jcr:nodeProperty node="${journalist}" name="PhoneNum" var="PhoneNum"/>
-<jcr:nodeProperty node="${journalist}" name="CellphoneNumber" var="CellphoneNumber"/>
-<jcr:nodeProperty node="${journalist}" name="AdditionalEmail" var="AdditionalEmail"/>
-<jcr:nodeProperty node="${journalist}" name="NewspapersConcerned" var="NewspapersConcerned"/>
-<jcr:nodeProperty node="${journalist}" name="Password" var="Password"/>
-<jcr:nodeProperty node="${journalist}" name="userUUID" var="userUUID"/>
-<jcr:nodeProperty node="${journalist}" name="state" var="state"/>
-<jcr:nodeProperty node="${journalist}" name="uuid" var="uuid"/>
-<jcr:nodeProperty node="${journalist}" name="errorMsg" var="errorMsg"/>
+<ost:jourGet node="${journalist}" name="Title" var="Title"/>
+<ost:jourGet node="${journalist}" name="AcademicTitle" var="AcademicTitle"/>
+<ost:jourGet node="${journalist}" name="Languages" var="languages"/>
+<ost:jourGet node="${journalist}" name="Email" var="Email"/>
+<ost:jourGet node="${journalist}" name="Name" var="Name"/>
+<ost:jourGet node="${journalist}" name="Surname" var="Surname"/>
+<ost:jourGet node="${journalist}" name="Adress" var="Adress"/>
+<ost:jourGet node="${journalist}" name="NPA" var="NPA"/>
+<ost:jourGet node="${journalist}" name="Place" var="Place"/>
+<ost:jourGet node="${journalist}" name="PhoneNum" var="PhoneNum"/>
+<ost:jourGet node="${journalist}" name="CellphoneNumber" var="CellphoneNumber"/>
+<ost:jourGet node="${journalist}" name="AdditionalEmail" var="AdditionalEmail"/>
+<ost:jourGet node="${journalist}" name="NewspapersConcerned" var="NewspapersConcerned"/>
+<ost:jourGet node="${journalist}" name="Password" var="Password"/>
+<ost:jourGet node="${journalist}" name="userUUID" var="userUUID"/>
+<ost:jourGet node="${journalist}" name="state" var="state"/>
+<ost:jourGet node="${journalist}" name="uuid" var="uuid"/>
+<ost:jourGet node="${journalist}" name="errorMsg" var="errorMsg"/>
 <div id="title">
     <h1>Edition de mon profil</h1>
-    <h1>${currentPage}</h1>
+    <%--<form action="http://jahia-training.lxc:8080/sites/bger/home/judge2/judge-info.html" onsubmit="return validateForm()">--%>
     <form action="${url.base}${currentNode.path}.EditJournalist.do" onsubmit="return validateForm()">
         <input type="hidden" name="currentPageUrl" value="${fn:replace(url.resourcePath, '.html', '')}"/>
+        <input type="hidden" name="mailSenderData" id="mailSenderData" value="mailSenderData"/>
         <div id="change_password">
             <h3>Mot de pase</h3>
             <div id="pass_fields">
@@ -77,7 +82,7 @@
             <h6 class="left">Journaux concernes</h6>
             <h6 class="left">Langue de travail *</h6>
             <ul style="list-style-type: none;">
-                <h1>Email: ${email.string}</h1>
+                <h1>Email: ${Email.string}</h1>
                 <c:forEach items="${languages}" var="language">
                     <c:if test="${language.string == 'Allemand'}"><c:set var="allenand" value="checked"></c:set></c:if>
                     <c:if test="${language.string == 'Franch'}"><c:set var="francais" value="checked"></c:set></c:if>
@@ -110,7 +115,8 @@
                 <li><label class="left">No telephone partable</label><input name="CellphoneNumber" id="celPhone" type="text"
                                                                             value="${CellphoneNumber.string}"
                                                                             class="right"/></li>
-                <li><label class="left">Email *</label><input name="email" type="email" id="email" value="${email.string}"
+                <li><label class="left">Email *</label><input name="email" type="email" id="email"
+                                                              value="${Email.string}"
                                                               class="right"/></li>
                 <c:if test="${AdditionalEmail == null}">
                     <li><label class="left"></label><input name="AdditionalEmail" type="email" value="" class="right"/>
@@ -124,7 +130,6 @@
                                                                value="${adEmail.string}" class="right"/></li>
                     </c:if>
                 </c:forEach>
-
             </ul>
             <input type="submit" value="Submit"/>
         </div>
@@ -141,13 +146,13 @@
         var adress = document.getElementById("Address").value;
         var npa = document.getElementById("NPA").value;
         var Place = document.getElementById("Place").value;
-        var email = document.getElementById("email").value;
+        var Email = document.getElementById("Email").value;
         var npaValidation = /\d+/;
         if (oldPassword != "${Password.string}") {
             document.getElementById("errorMessage").innerHTML += "Wrong password!";
             returnResult=false;
         }
-        if (email == "") {
+        if (Email == "") {
             document.getElementById("errorMessage").innerHTML += "Email field is mandatory!";
             returnResult=false;
         }
