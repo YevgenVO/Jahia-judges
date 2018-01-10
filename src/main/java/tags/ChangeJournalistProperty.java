@@ -51,7 +51,6 @@ public class ChangeJournalistProperty extends AbstractJahiaTag {
                         emails.remove("");
                         journalist.setProperty("AdditionalEmail", emails.toArray(new String[emails.size()]));
                     } else {
-                        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Value = " + propertyValue);
                         journalist.setProperty(name, propertyValue);
                     }
                         journalist.saveSession();

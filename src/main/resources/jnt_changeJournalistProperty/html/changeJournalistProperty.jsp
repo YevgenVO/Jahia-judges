@@ -16,7 +16,7 @@
 
 <c:set var="journalistName" value="${currentNode.properties['journalistName'].string}"/>
 
-<jcr:sql var="queryResult" sql="select * from [jnt:jurnalistData] as j where j.[Name]='${journalistName}'"/>
+<jcr:sql var="queryResult" sql="select * from [jnt:jurnalistData] as j where j.[j:nodename]='${journalistName}'"/>
 <c:forEach items="${queryResult.nodes}" var="element">
     <c:set var="journalist" value="${element}"/>
 </c:forEach>

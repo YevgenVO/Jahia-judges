@@ -14,7 +14,7 @@
                  jcr:primaryType="jnt:folder">
                         <main jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                      jcr:primaryType="jnt:folder">
-                            <resources jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                            <resources jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                              jcr:primaryType="jnt:folder">
                                 <jnt_judgeTable jcr:mixinTypes="jmix:hasExternalProviderExtension"
                                      jcr:primaryType="jnt:nodeTypeFolder">

@@ -85,6 +85,8 @@ public class EditJournalist extends Action {
             }
         journalistNode.setProperty("Password", request.getParameter("newPassword"));
         }
+        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NPA = " + request.getParameter("NPA"));
+        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NPA = " + journalistNode.getPropertyAsString("NPA"));
         journalistNode.saveSession();
         session.refresh(true);
         session.save();
@@ -97,7 +99,6 @@ public class EditJournalist extends Action {
     }
 
     private void sendMail(JCRNodeWrapper journalist, Resource resource, JCRSessionWrapper session, String mailSenderData) throws RepositoryException, ScriptException {
-        LOG.info("select * from [jnt:mailSenderData] where [j:nodename] = '" + mailSenderData + "'");
         String query = "select * from [jnt:mailSenderData] where [j:nodename] = '" + mailSenderData + "'";
         QueryResultWrapper queryWrapper = session.getWorkspace().getQueryManager().
                 createQuery(query, Query.JCR_SQL2).execute();
