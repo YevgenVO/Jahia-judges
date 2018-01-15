@@ -26,10 +26,10 @@ public class GetJournalistProperty extends AbstractJahiaTag {
                 pageContext.setAttribute(var, node.getProperty(name).getValues());
             } else {
                 pageContext.setAttribute(var, node.getProperty(name).getValue());
-                LOG.info("Property with name \"" + name + "\" = " + node.getPropertyAsString(name));
+//                LOG.info("Property with name \"" + name + "\" = " + node.getPropertyAsString(name));
             }
         } catch (RepositoryException e) {
-            LOG.info("!!!!!!!!!!!!!!!!!Property with name \"" + name + "\" doesn't exists!");
+//            LOG.info("!!!!!!!!!!!!!!!!!Property with name \"" + name + "\" doesn't exists!");
         }
 
         return super.doStartTag();

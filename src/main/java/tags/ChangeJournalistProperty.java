@@ -1,6 +1,7 @@
 package tags;
 
 
+import journalist.actions.UserDao;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.content.JCRPublicationService;
 import org.jahia.services.content.JCRSessionFactory;
@@ -26,7 +27,11 @@ public class ChangeJournalistProperty extends AbstractJahiaTag {
 
     private String propertyValue;
 
+    private boolean isLiveMode;
+
     private JCRNodeWrapper journalist;
+
+    private UserDao userDao = new UserDao();
 
     public ChangeJournalistProperty() {
         super();
@@ -53,14 +58,17 @@ public class ChangeJournalistProperty extends AbstractJahiaTag {
                     } else {
                         journalist.setProperty(name, propertyValue);
                     }
-                        journalist.saveSession();
-                        session.refresh(true);
-                        session.save();
-                        publicationService.publishByMainId(journalist.getUUID(), "live", "default",
-                                (Set) null, true, (List) null);
-                        LOG.info("Journalist with name " + journalist.getPropertyAsString("Name") + " have been modified!");
-
+                journalist.saveSession();
+                session.refresh(true);
+                session.save();
+                if (isLiveMode) {
+                    publicationService.publishByMainId(journalist.getUUID(), "live", "default",
+                            (Set) null, true, (List) null);
                 }
+                userDao.doModify(journalist);
+                LOG.info("Journalist with name " + journalist.getPropertyAsString("Name") + " have been modified!");
+
+            }
         } catch (RepositoryException e) {
         LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!Invalid value type.");
     }
@@ -74,6 +82,11 @@ public class ChangeJournalistProperty extends AbstractJahiaTag {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setLiveMode(String liveMode) {
+        isLiveMode = new Boolean(liveMode);
+    }
+
 
     public void setJournalist(JCRNodeWrapper journalist) {
         this.journalist = journalist;

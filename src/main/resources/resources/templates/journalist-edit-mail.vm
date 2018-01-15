@@ -1,6 +1,4 @@
-_____________________________________________
-<h4>This is an automatic generated letter</h4>
-_____________________________________________
+$header
 <div class="letter">
     <h5>Title:</h5><span>$Title</span>
     <h5>Academic title:</h5><span>$AcademicTitle</span>
@@ -18,4 +16,5 @@ _____________________________________________
         #end
     #end
 </div>
-<h4>Best Regards,<br>Administration!</h4>
+
+$footer

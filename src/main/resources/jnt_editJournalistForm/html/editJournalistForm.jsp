@@ -22,11 +22,12 @@
 <c:set var="userKey" value="${renderContext.user.userKey}"/>
 <jcr:sql var="userQuery" sql="select * from [jnt:user] as u where ISDESCENDANTNODE(u, '/users')"/>
 <c:forEach items="${userQuery.nodes}" var="element">
-    <c:if test="${element.path == '/users/ci/ii/ee/journalist-data'}">
-        <%--<c:if test="${element.path == userKey}">--%>
+    <%--<c:if test="${element.path == '/users/ci/ii/ee/journalist-data'}">--%>
+        <c:if test="${element.path == userKey}">
         <c:set var="user" value="${element}"/>
     </c:if>
 </c:forEach>
+
 <jcr:sql var="queryResult" sql="select * from [jnt:jurnalistData] as j where j.[userUUID]='${user.identifier}'"/>
 <c:forEach items="${queryResult.nodes}" var="element">
     <c:set var="journalist" value="${element}"/>
@@ -137,14 +138,22 @@
             var adress = document.getElementById("Address").value;
             var npa = document.getElementById("NPA").value;
             var Place = document.getElementById("Place").value;
-            var Email = document.getElementById("Email").value;
+            var Email = document.getElementById("email").value;
             var npaValidation = /\d+/;
-            if (oldPassword != "${Password.string}") {
-                document.getElementById("errorMessage").innerHTML += "Wrong password!";
+            if (oldPassword !="" && newPassword == "") {
+                document.getElementById("errorMessage").innerHTML += "<br>Please fill in new password or clean 'Mot de passe existant' field!";
+                returnResult=false;
+            }
+            if (oldPassword !="" && passConfirmation =="" && newPassword != "") {
+                document.getElementById("errorMessage").innerHTML += "<br>Please fill in 'Verifier votre nouveau mot de passe' field!";
+                returnResult=false;
+            }
+            if (oldPassword!="" && oldPassword != "${Password.string}") {
+                document.getElementById("errorMessage").innerHTML += "<br>Wrong password!";
                 returnResult=false;
             }
             if (Email == "") {
-                document.getElementById("errorMessage").innerHTML += "Email field is mandatory!";
+                document.getElementById("errorMessage").innerHTML += "<br>Email field is mandatory!";
                 returnResult=false;
             }
             if (newPassword != passConfirmation) {

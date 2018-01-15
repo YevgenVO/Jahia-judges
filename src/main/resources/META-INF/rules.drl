@@ -29,5 +29,6 @@ rule "Delete or update User"
         A node is published
                 - it has the type jnt:jurnalistData
     then
+    Log "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Update User" + node.getName()
         UpdateJournalist node
 end

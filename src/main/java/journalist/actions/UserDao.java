@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.jcr.RepositoryException;
 import javax.jcr.query.Query;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -33,9 +34,13 @@ public final class UserDao {
     }
 
     public void modify(PublishedNodeFact publishedNodeFact) throws RepositoryException {
+        JCRNodeWrapper journalist = publishedNodeFact.getNode();
+        doModify(journalist);
+    }
+
+    public void doModify(JCRNodeWrapper journalist) throws RepositoryException {
         JCRSessionWrapper session = JCRSessionFactory.getInstance()
                 .getCurrentSystemSession("default", null, null);
-        JCRNodeWrapper journalist = publishedNodeFact.getNode();
         List<String> nodeTypes = journalist.getNodeTypes();
         JCRNodeWrapper user = getJournalistUser(journalist.getPropertyAsString("userUUID"), session);
 
@@ -65,13 +70,17 @@ public final class UserDao {
         return properties;
     }
 
-    public static JCRNodeWrapper getJournalistUser(String uuid, JCRSessionWrapper session) throws RepositoryException {
+    public static JCRNodeWrapper getJournalistUser(String uuid, JCRSessionWrapper session) {
         JCRNodeWrapper user = null;
         Query query;
         if (uuid != null) {
-            query = session.getWorkspace().getQueryManager().createQuery(
-                    "select * from [jnt:user] where [jcr:uuid]='" + uuid + "'", Query.JCR_SQL2);
-            user = (JCRNodeWrapper) query.execute().getNodes().nextNode();
+            try {
+                query = session.getWorkspace().getQueryManager().createQuery(
+                        "select * from [jnt:user] where [jcr:uuid]='" + uuid + "'", Query.JCR_SQL2);
+                user = (JCRNodeWrapper) query.execute().getNodes().nextNode();
+            } catch (RepositoryException e) {
+                LOG.info("!!!!!!!!!!Can not retrieve user with uuid=" + uuid);
+            }
         }
         return user;
     }
@@ -85,6 +94,7 @@ public final class UserDao {
         JCRNodeWrapper user = userManagerService.createUser(journalistNode.getName(),
                 properties.getProperty("Password"), properties, session);
         journalistNode.setProperty("userUUID", user.getUUID());
+        journalistNode.grantRoles("u:" + user.getName(), Collections.singleton("owner"));
         journalistNode.saveSession();
         user.getSession().refresh(true);
         user.getSession().save();

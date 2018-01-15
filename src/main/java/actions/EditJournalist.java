@@ -1,10 +1,12 @@
 package actions;
 
+import journalist.actions.UserDao;
 import org.jahia.bin.Action;
 import org.jahia.bin.ActionResult;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.content.JCRPublicationService;
 import org.jahia.services.content.JCRSessionWrapper;
+import org.jahia.services.content.decorator.JCRUserNode;
 import org.jahia.services.mail.MailService;
 import org.jahia.services.query.QueryResultWrapper;
 import org.jahia.services.render.RenderContext;
@@ -35,6 +37,12 @@ public class EditJournalist extends Action {
     private static final String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 
     private  MailService mailService;
+
+    private UserDao userDao = new UserDao();
+
+//    public void setUserDao(UserDao userDao) {
+//        this.userDao = userDao;
+//    }
 
     public void setMailService(MailService mailService) {
         this.mailService = mailService;
@@ -78,21 +86,29 @@ public class EditJournalist extends Action {
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
         String passConfirmation = request.getParameter("passConfirmation");
-        if (oldPassword != null || !oldPassword.trim().equals("")){
-            if (!oldPassword.equals(journalistNode.getPropertyAsString("Password")) || !newPassword.equals(passConfirmation)
-                    || newPassword == null || newPassword.length() < 6) {
-                return result;
-            }
-        journalistNode.setProperty("Password", request.getParameter("newPassword"));
+        boolean changeUserPassword = false;
+        JCRUserNode userNode = (JCRUserNode) userDao.getJournalistUser(journalistNode.getPropertyAsString("userUUID"), session);
+        if (oldPassword != null && oldPassword != "" && (!userNode.verifyPassword(oldPassword) || !newPassword.equals(passConfirmation)
+                || newPassword.length() < 6)) {
+            return result;
         }
-        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NPA = " + request.getParameter("NPA"));
-        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NPA = " + journalistNode.getPropertyAsString("NPA"));
-        journalistNode.saveSession();
+
+        if (userNode.verifyPassword(oldPassword)) {
+            journalistNode.setProperty("Password", request.getParameter("newPassword"));
+            changeUserPassword = true;
+        }
+        journalistNode.getSession().save();
+        userDao.doModify(journalistNode);
         session.refresh(true);
         session.save();
-        publicationService.publishByMainId(journalistNode.getUUID(), "live", "default",
+
+        publicationService.publishByMainId(journalistNode.getIdentifier(), "live", "default",
                 (Set)null, true, (List)null);
-        publicationService.publishByMainId(journalistNode.getUUID());
+        if (changeUserPassword) {
+            userNode.getSession().save();
+            publicationService.publishByMainId(userNode.getUUID(), "live", "default",
+                    (Set) null, true, (List) null);
+        }
         LOG.info("Journalist with name " + journalistNode.getPropertyAsString("Name") + " have been modified!");
         sendMail(journalistNode, resource, session, request.getParameter("mailSenderData"));
         return result;
@@ -112,10 +128,7 @@ public class EditJournalist extends Action {
             String templatePath = "resources/templates/journalist-edit-mail.vm";
             String templateName = "judges";
             Map<String, Object> bindings = new HashMap<>();
-            bindings.put("subject", mailTemplate.getPropertyAsString("subject"));
-            bindings.put("header", mailTemplate.getPropertyAsString("header"));
-            bindings.put("footer", mailTemplate.getPropertyAsString("footer"));
-            bindings.put("body", mailTemplate.getPropertyAsString("body"));
+            bindings.putAll(mailTemplate.getPropertiesAsString());
             bindings.putAll(journalist.getPropertiesAsString());
             for (String to : emails) {
                 mailService.sendMessageWithTemplate(templatePath, bindings, to, from, "", "", resource.getLocale(), templateName);

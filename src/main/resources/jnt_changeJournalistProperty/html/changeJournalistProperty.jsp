@@ -26,9 +26,10 @@
 
 
 
-<ost:jourChange name="${journalistPropertyName}" journalist="${journalist}" propertyValue="${journalistPropertyValue}"/>
+<ost:jourChange name="${journalistPropertyName}" journalist="${journalist}" propertyValue="${journalistPropertyValue}" liveMode="${renderContext.liveMode}"/>
 
 <h1>${journalist.properties['AdditionalEmail'][0].string}</h1>
 <h1>${journalistPropertyName}</h1>
 <h1>${journalistPropertyValue}</h1>
+
 

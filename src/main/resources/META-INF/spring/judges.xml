@@ -8,6 +8,7 @@
     <bean id="editJournalist" class="actions.EditJournalist">
         <property name="mailService" ref="MailService"/>
     </bean>
+    <!--<bean id="userDao" class="journalist.actions.UserDao"/>-->
     <bean class="org.jahia.services.content.rules.ModuleGlobalObject">
         <property name="globalRulesObject">
             <map>

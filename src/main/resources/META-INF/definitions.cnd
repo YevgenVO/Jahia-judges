@@ -54,3 +54,5 @@
  - journalistName (string) mandatory
  - journalistPropertyName (string) mandatory
  - journalistPropertyValue (string) mandatory
+
+[jnt:switchLanguage] > jnt:content, jmix:dropContent

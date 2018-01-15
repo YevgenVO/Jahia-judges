@@ -33,6 +33,11 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <name>liveMode</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <name>journalist</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
