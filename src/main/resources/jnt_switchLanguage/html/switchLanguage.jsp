@@ -61,4 +61,3 @@
     <a href="${italian}${url.resourcePath}${parameters}">italian</a><br/>
     <a href="${french}${url.resourcePath}${parameters}">french</a><br/>
 </c:if>
-
