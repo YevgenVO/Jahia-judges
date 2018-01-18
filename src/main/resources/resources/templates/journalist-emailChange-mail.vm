@@ -1,0 +1,12 @@
+$header
+
+<div class="letter">
+    <h5>Your Current Email Address(es):</h5><span>$Email</span>
+    #if($AdditionalEmail)
+        #foreach($email in $AdditionalEmail.split(" "))
+            <span style="text-indent: 20px;">$email</span>
+        #end
+    #end
+</div>
+
+$footer

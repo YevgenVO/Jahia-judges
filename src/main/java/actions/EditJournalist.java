@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -110,11 +111,11 @@ public class EditJournalist extends Action {
                     (Set) null, true, (List) null);
         }
         LOG.info("Journalist with name " + journalistNode.getPropertyAsString("Name") + " have been modified!");
-        sendMail(journalistNode, resource, session, request.getParameter("mailSenderData"));
+        sendMail(journalistNode, resource.getLocale(), session, request.getParameter("mailSenderData"));
         return result;
     }
 
-    private void sendMail(JCRNodeWrapper journalist, Resource resource, JCRSessionWrapper session, String mailSenderData) throws RepositoryException, ScriptException {
+    private void sendMail(JCRNodeWrapper journalist, Locale locale, JCRSessionWrapper session, String mailSenderData) throws RepositoryException, ScriptException {
         String query = "select * from [jnt:mailSenderData] where [j:nodename] = '" + mailSenderData + "'";
         QueryResultWrapper queryWrapper = session.getWorkspace().getQueryManager().
                 createQuery(query, Query.JCR_SQL2).execute();
@@ -131,7 +132,7 @@ public class EditJournalist extends Action {
             bindings.putAll(mailTemplate.getPropertiesAsString());
             bindings.putAll(journalist.getPropertiesAsString());
             for (String to : emails) {
-                mailService.sendMessageWithTemplate(templatePath, bindings, to, from, "", "", resource.getLocale(), templateName);
+                mailService.sendMessageWithTemplate(templatePath, bindings, to, from, "", "", locale, templateName);
                 LOG.info("Mail to " + to + " have been sent!");
             }
         }

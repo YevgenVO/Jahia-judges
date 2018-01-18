@@ -18,6 +18,11 @@
             </map>
         </property>
     </bean>
+    <bean id="jcrService" class="service.JCRService"/>
+    <bean id="mailModificationListener" class="events.MailModificationListener">
+        <property name="jcrService" ref="jcrService"/>
+        <property name="mailService" ref="MailService"/>
+    </bean>
     <bean parent="jobSchedulingBean">
         <property name="jobDetail">
             <bean class="org.springframework.scheduling.quartz.JobDetailBean">
