@@ -19,10 +19,12 @@
         </property>
     </bean>
     <bean id="jcrService" class="service.JCRService"/>
-    <bean id="mailModificationListener" class="events.MailModificationListener">
+    <bean id="mailModificationListener" class="listeners.MailModificationListener">
         <property name="jcrService" ref="jcrService"/>
         <property name="mailService" ref="MailService"/>
     </bean>
+
+    <bean id="testListener" class="listeners.TestListener"/>
     <bean parent="jobSchedulingBean">
         <property name="jobDetail">
             <bean class="org.springframework.scheduling.quartz.JobDetailBean">

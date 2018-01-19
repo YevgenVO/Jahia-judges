@@ -1,13 +1,11 @@
-package events;
+package listeners;
 
+import org.jahia.api.Constants;
 import org.jahia.services.content.DefaultEventListener;
-import org.jahia.services.content.JCRNodeIteratorWrapper;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.content.JCRPropertyWrapper;
 import org.jahia.services.content.JCRSessionWrapper;
-import org.jahia.services.content.JCRValueWrapper;
 import org.jahia.services.mail.MailService;
-import org.jahia.services.query.QueryResultWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.JCRService;
@@ -15,7 +13,6 @@ import service.JCRService;
 import javax.jcr.RepositoryException;
 import javax.jcr.observation.Event;
 import javax.jcr.observation.EventIterator;
-import javax.jcr.query.Query;
 import javax.script.ScriptException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,15 +23,24 @@ import java.util.Set;
 
 public class MailModificationListener extends DefaultEventListener {
 
+    public MailModificationListener() {
+        super();
+        setWorkspace(Constants.EDIT_WORKSPACE);
+    }
+
     private MailService mailService;
 
     private static final Logger LOG = LoggerFactory.getLogger(MailModificationListener.class);
 
     private JCRService jcrService;
 
+    public String[] getNodeTypes() {
+        return new String[] {"jnt:jurnalistData"};
+    }
+
     @Override
     public int getEventTypes() {
-        return Event.PROPERTY_CHANGED;
+        return Event.PROPERTY_CHANGED + Event.PROPERTY_REMOVED + Event.PROPERTY_ADDED;
     }
 
     @Override
