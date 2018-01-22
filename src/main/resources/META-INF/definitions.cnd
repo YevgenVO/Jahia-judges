@@ -56,3 +56,10 @@
  - journalistPropertyValue (string) mandatory
 
 [jnt:switchLanguage] > jnt:content, jmix:dropContent
+
+[jnt:customNavigationMenu] > jnt:contentList, jmix:dropContent orderable
+ + * (jnt:menuPage)
+
+[jnt:menuPage] > jnt:content, jmix:dropContent
+ - title (string) mandatory internationalized
+ - reference (weakreference, picker[type='page']) mandatory

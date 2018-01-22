@@ -25,7 +25,8 @@
                                 </jnt_judgeTable>
                                 <META-INF jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                                jcr:primaryType="jnt:metaInfFolder">
-                                    <definitions.cnd jcr:primaryType="jnt:definitionFile"/>
+                                    <definitions.cnd jcr:mixinTypes="jmix:sourceControl"
+                                         jcr:primaryType="jnt:definitionFile"/>
                                 </META-INF>
                                 <jnt_judgeView jcr:mixinTypes="jmix:hasExternalProviderExtension"
                                     jcr:primaryType="jnt:nodeTypeFolder">
@@ -45,6 +46,28 @@
                 <templates j:rootTemplatePath="/base" jcr:primaryType="jnt:templatesFolder">
                     <files jcr:primaryType="jnt:folder"/>
                     <contents jcr:primaryType="jnt:contentFolder"/>
+                    <template j:hiddenTemplate="false"
+                      j:view="customBase"
+                      jcr:primaryType="jnt:template">
+                        <j:translation_en jcr:language="en"
+                                 jcr:mixinTypes="mix:title"
+                                 jcr:primaryType="jnt:translation"
+                                 jcr:title="base"/>
+                        <pagetemplate j:hiddenTemplate="false"
+                             j:view="customBase"
+                             jcr:primaryType="jnt:pageTemplate">
+                            <j:translation_en jcr:language="en"
+                                    jcr:mixinTypes="mix:title"
+                                    jcr:primaryType="jnt:translation"
+                                    jcr:title="PageTemplate"/>
+                            <nav-menu jcr:primaryType="jnt:contentList">
+                                <nav-menu j:allowedTypes="jnt:customNavigationMenu"
+                               j:limitedAbsoluteAreaEdit="false"
+                               j:numberOfItems="1"
+                               jcr:primaryType="jnt:absoluteArea"/>
+                            </nav-menu>
+                        </pagetemplate>
+                    </template>
                 </templates>
                 
             </judges>
