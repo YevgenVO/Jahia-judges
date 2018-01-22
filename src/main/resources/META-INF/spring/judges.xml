@@ -25,6 +25,11 @@
     </bean>
 
     <bean id="testListener" class="listeners.TestListener"/>
+    <bean id="redirectUserToEditModeFilter" class="filter.RedirectUserToEditModeFilter">
+        <property name="priority" value="15"/>
+        <property name="applyOnConfigurations" value="page"/>
+        <property name="applyOnModes" value="live"/>
+    </bean>
     <bean parent="jobSchedulingBean">
         <property name="jobDetail">
             <bean class="org.springframework.scheduling.quartz.JobDetailBean">
