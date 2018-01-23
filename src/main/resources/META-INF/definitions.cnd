@@ -63,3 +63,5 @@
 [jnt:menuPage] > jnt:content, jmix:dropContent
  - title (string) mandatory internationalized
  - reference (weakreference, picker[type='page']) mandatory
+
+[jnt:customLoginForm] > jnt:content, jmix:dropContent
