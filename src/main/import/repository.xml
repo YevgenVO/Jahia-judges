@@ -23,10 +23,9 @@
                                         <judgeTable.jsp jcr:primaryType="jnt:viewFile"/>
                                     </html>
                                 </jnt_judgeTable>
-                                <META-INF jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
+                                <META-INF jcr:mixinTypes="jmix:hasExternalProviderExtension"
                                jcr:primaryType="jnt:metaInfFolder">
-                                    <definitions.cnd jcr:mixinTypes="jmix:sourceControl"
-                                         jcr:primaryType="jnt:definitionFile"/>
+                                    <definitions.cnd jcr:primaryType="jnt:definitionFile"/>
                                 </META-INF>
                                 <jnt_judgeView jcr:mixinTypes="jmix:hasExternalProviderExtension"
                                     jcr:primaryType="jnt:nodeTypeFolder">
