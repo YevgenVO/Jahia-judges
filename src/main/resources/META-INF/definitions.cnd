@@ -65,3 +65,5 @@
  - reference (weakreference, picker[type='page']) mandatory
 
 [jnt:customLoginForm] > jnt:content, jmix:dropContent
+
+[jnt:journalistsListPagination] > jmix:list, jmix:dropContent orderable

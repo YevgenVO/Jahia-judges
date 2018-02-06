@@ -59,8 +59,8 @@
   <name>judges</name>
   <description>This is the custom module (judges) for running on a Digital Experience Manager server.</description>
   <scm>
-    <connection>scm:dummy:uri</connection>
-    <developerConnection>scm:dummy:uri</developerConnection>
+    <connection>scm:git:https://github.com/YevgenVO/Jahia-judges.git</connection>
+    <developerConnection>scm:git:https://github.com/YevgenVO/Jahia-judges.git</developerConnection>
   </scm>
   <properties>
     <jahia.modules.importPackage>org.jahia.defaults.config.spring,

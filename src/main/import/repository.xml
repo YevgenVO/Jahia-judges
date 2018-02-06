@@ -7,37 +7,6 @@
               j:title="judges"
               jcr:mixinTypes="jmix:hasExternalProviderExtension"
               jcr:primaryType="jnt:module">
-                <sources jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
-                  jcr:primaryType="jnt:moduleVersionFolder"
-                  j:staticMountPointProviderKey="module-judges-1.0-SNAPSHOT">
-                    <src jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
-                 jcr:primaryType="jnt:folder">
-                        <main jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
-                     jcr:primaryType="jnt:folder">
-                            <resources jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
-                             jcr:primaryType="jnt:folder">
-                                <jnt_judgeTable jcr:mixinTypes="jmix:hasExternalProviderExtension"
-                                     jcr:primaryType="jnt:nodeTypeFolder">
-                                    <html jcr:mixinTypes="jmix:hasExternalProviderExtension"
-                              jcr:primaryType="jnt:templateTypeFolder">
-                                        <judgeTable.jsp jcr:primaryType="jnt:viewFile"/>
-                                    </html>
-                                </jnt_judgeTable>
-                                <META-INF jcr:mixinTypes="jmix:hasExternalProviderExtension"
-                               jcr:primaryType="jnt:metaInfFolder">
-                                    <definitions.cnd jcr:primaryType="jnt:definitionFile"/>
-                                </META-INF>
-                                <jnt_judgeView jcr:mixinTypes="jmix:hasExternalProviderExtension"
-                                    jcr:primaryType="jnt:nodeTypeFolder">
-                                    <html jcr:mixinTypes="jmix:hasExternalProviderExtension"
-                              jcr:primaryType="jnt:templateTypeFolder">
-                                        <judgeView.jsp jcr:primaryType="jnt:viewFile"/>
-                                    </html>
-                                </jnt_judgeView>
-                            </resources>
-                        </main>
-                    </src>
-                </sources>
                 
                 <portlets jcr:primaryType="jnt:portletFolder"/>
                 <files jcr:primaryType="jnt:folder"/>
@@ -60,10 +29,257 @@
                                     jcr:primaryType="jnt:translation"
                                     jcr:title="PageTemplate"/>
                             <nav-menu jcr:primaryType="jnt:contentList">
-                                <nav-menu j:allowedTypes="jnt:customNavigationMenu"
-                               j:limitedAbsoluteAreaEdit="true"
-                               j:numberOfItems="1"
-                               jcr:primaryType="jnt:absoluteArea"/>
+                                <pager displayNbOfItemsPerPage="false"
+                            displayNbOfItemsPerPageValues="5,10,25,50,100"
+                            displayPager="true"
+                            j:bindedComponent="/modules/judges/templates/template/pagetemplate/nav-menu/journalists-list"
+                            jcr:primaryType="jnt:pager"
+                            nbOfPages="5"
+                            pageSize="5"/>
+                                <journalists-list jcr:primaryType="jnt:journalistsListPagination">
+                                    <journalist-data AcademicTitle="Academic title"
+                                         Adress="Adress"
+                                         Email="likjasdf@lojk.ll"
+                                         NPA="123"
+                                         Name="Name1"
+                                         Password="pass"
+                                         Place="place"
+                                         Surname="Surname"
+                                         Title="Male"
+                                         disabled="false"
+                                         jcr:mixinTypes="jmix:accessControlled"
+                                         jcr:primaryType="jnt:jurnalistData"
+                                         state="active"
+                                         userUUID="b9f665ad-9f96-49b3-9294-2314049defb5">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data j:aceType="GRANT"
+                                                       j:principal="u:journalist-data"
+                                                       j:protected="false"
+                                                       j:roles="owner"
+                                                       jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data>
+                                    <journalist-data-1 AcademicTitle="Academic title"
+                                           Adress="Adress"
+                                           Email="likjasdf@lojk.ll"
+                                           NPA="123"
+                                           Name="Name2"
+                                           Password="pass"
+                                           Place="place"
+                                           Surname="Surname"
+                                           Title="Male"
+                                           disabled="false"
+                                           jcr:mixinTypes="jmix:accessControlled"
+                                           jcr:primaryType="jnt:jurnalistData"
+                                           state="active"
+                                           userUUID="bc5c75a1-429a-424c-805a-5be8fbf0a12e">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-1 j:aceType="GRANT"
+                                                         j:principal="u:journalist-data-1"
+                                                         j:protected="false"
+                                                         j:roles="owner"
+                                                         jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-1>
+                                    <journalist-data-2 AcademicTitle="Academic title"
+                                           Adress="Adress"
+                                           Email="likjasdf@lojk.ll"
+                                           NPA="123"
+                                           Name="Name3"
+                                           Password="pass"
+                                           Place="place"
+                                           Surname="Surname"
+                                           Title="Male"
+                                           disabled="false"
+                                           jcr:mixinTypes="jmix:accessControlled"
+                                           jcr:primaryType="jnt:jurnalistData"
+                                           state="active"
+                                           userUUID="567e03c5-e44d-4095-a75e-0095d2815eb4">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-2 j:aceType="GRANT"
+                                                         j:principal="u:journalist-data-2"
+                                                         j:protected="false"
+                                                         j:roles="owner"
+                                                         jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-2>
+                                    <journalist-data-3 AcademicTitle="Academic title"
+                                           Adress="Adress"
+                                           Email="likjasdf@lojk.ll"
+                                           NPA="123"
+                                           Name="Name4"
+                                           Password="pass"
+                                           Place="place"
+                                           Surname="Surname"
+                                           Title="Male"
+                                           disabled="false"
+                                           jcr:mixinTypes="jmix:accessControlled"
+                                           jcr:primaryType="jnt:jurnalistData"
+                                           state="active"
+                                           userUUID="0fc38f72-53b7-48d2-9a4f-7ebfcd0d528f">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-3 j:aceType="GRANT"
+                                                         j:principal="u:journalist-data-3"
+                                                         j:protected="false"
+                                                         j:roles="owner"
+                                                         jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-3>
+                                    <journalist-data-4 AcademicTitle="Academic title"
+                                           Adress="Adress"
+                                           Email="likjasdf@lojk.ll"
+                                           NPA="123"
+                                           Name="Name5"
+                                           Password="pass"
+                                           Place="place"
+                                           Surname="Surname"
+                                           Title="Male"
+                                           disabled="false"
+                                           jcr:mixinTypes="jmix:accessControlled"
+                                           jcr:primaryType="jnt:jurnalistData"
+                                           state="active"
+                                           userUUID="ab53af5d-626e-4b9c-a642-796a193bcd94">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-4 j:aceType="GRANT"
+                                                         j:principal="u:journalist-data-4"
+                                                         j:protected="false"
+                                                         j:roles="owner"
+                                                         jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-4>
+                                    <journalist-data-5 AcademicTitle="Academic title"
+                                           Adress="Adress"
+                                           Email="likjasdf@lojk.ll"
+                                           NPA="123"
+                                           Name="Name6"
+                                           Password="pass"
+                                           Place="place"
+                                           Surname="Surname"
+                                           Title="Male"
+                                           disabled="false"
+                                           jcr:mixinTypes="jmix:accessControlled"
+                                           jcr:primaryType="jnt:jurnalistData"
+                                           state="active"
+                                           userUUID="6fca10f4-1c85-45cd-abdc-cbd692caab68">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-5 j:aceType="GRANT"
+                                                         j:principal="u:journalist-data-5"
+                                                         j:protected="false"
+                                                         j:roles="owner"
+                                                         jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-5>
+                                    <journalist-data-6 AcademicTitle="Academic title"
+                                           Adress="Adress"
+                                           Email="likjasdf@lojk.ll"
+                                           NPA="123"
+                                           Name="Name7"
+                                           Password="pass"
+                                           Place="place"
+                                           Surname="Surname"
+                                           Title="Male"
+                                           disabled="false"
+                                           jcr:mixinTypes="jmix:accessControlled"
+                                           jcr:primaryType="jnt:jurnalistData"
+                                           state="active"
+                                           userUUID="e2c63e33-cc9a-4269-a0d8-7d60d064e52d">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-6 j:aceType="GRANT"
+                                                         j:principal="u:journalist-data-6"
+                                                         j:protected="false"
+                                                         j:roles="owner"
+                                                         jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-6>
+                                    <journalist-data-7 AcademicTitle="Academic title"
+                                           Adress="Adress"
+                                           Email="likjasdf@lojk.ll"
+                                           NPA="123"
+                                           Name="Name8"
+                                           Password="pass"
+                                           Place="place"
+                                           Surname="Surname"
+                                           Title="Male"
+                                           disabled="false"
+                                           jcr:mixinTypes="jmix:accessControlled"
+                                           jcr:primaryType="jnt:jurnalistData"
+                                           state="active"
+                                           userUUID="a6d0df36-3370-4e1c-8a72-90fedd3dc0d7">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-7 j:aceType="GRANT"
+                                                         j:principal="u:journalist-data-7"
+                                                         j:protected="false"
+                                                         j:roles="owner"
+                                                         jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-7>
+                                    <journalist-data-8 AcademicTitle="Academic title"
+                                           Adress="Adress"
+                                           Email="likjasdf@lojk.ll"
+                                           NPA="123"
+                                           Name="Name9"
+                                           Password="pass"
+                                           Place="place"
+                                           Surname="Surname"
+                                           Title="Male"
+                                           disabled="false"
+                                           jcr:mixinTypes="jmix:accessControlled"
+                                           jcr:primaryType="jnt:jurnalistData"
+                                           state="active"
+                                           userUUID="c6357526-b948-4946-8cc3-823cb9124930">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-8 j:aceType="GRANT"
+                                                         j:principal="u:journalist-data-8"
+                                                         j:protected="false"
+                                                         j:roles="owner"
+                                                         jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-8>
+                                    <journalist-data-9 AcademicTitle="Academic title"
+                                           Adress="Adress"
+                                           Email="likjasdf@lojk.ll"
+                                           NPA="123"
+                                           Name="Name10"
+                                           Password="pass"
+                                           Place="place"
+                                           Surname="Surname"
+                                           Title="Male"
+                                           disabled="false"
+                                           jcr:mixinTypes="jmix:accessControlled"
+                                           jcr:primaryType="jnt:jurnalistData"
+                                           state="active"
+                                           userUUID="526d5fad-7b89-4334-a318-a2990a609be9">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-9 j:aceType="GRANT"
+                                                         j:principal="u:journalist-data-9"
+                                                         j:protected="false"
+                                                         j:roles="owner"
+                                                         jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-9>
+                                    <journalist-data-10 AcademicTitle="Academic title"
+                                            Adress="Adress"
+                                            Email="likjasdf@lojk.ll"
+                                            NPA="123"
+                                            Name="Name11"
+                                            Password="pass"
+                                            Place="place"
+                                            Surname="Surname"
+                                            Title="Male"
+                                            disabled="false"
+                                            jcr:mixinTypes="jmix:accessControlled"
+                                            jcr:primaryType="jnt:jurnalistData"
+                                            state="active"
+                                            userUUID="e3eb1f8e-8ca9-491d-9b5f-a8bff3531b83">
+                                        <j:acl jcr:primaryType="jnt:acl">
+                                            <GRANT_u_journalist-data-10 j:aceType="GRANT"
+                                                          j:principal="u:journalist-data-10"
+                                                          j:protected="false"
+                                                          j:roles="owner"
+                                                          jcr:primaryType="jnt:ace"/>
+                                        </j:acl>
+                                    </journalist-data-10>
+                                </journalists-list>
                             </nav-menu>
                         </pagetemplate>
                     </template>
