@@ -16,12 +16,7 @@
 <c:set var="failureRedirect" value="${renderContext.mainResource.node.url}" scope="application"/>
 
 <c:set var="loginError" value="${param.loginError}"/>
-<c:if test="${renderContext.liveMode}">
-    <c:set var="redirectTo" value="/sites/bger/home/success-login.html"/>
-</c:if>
-<c:if test="${renderContext.contributionMode}">
-    <c:set var="redirectTo" value="/cms/render/default/en/sites/bger/home/success-login.html"/>
-</c:if>
+<c:set var="redirectTo" value="${renderContext.site.path}/home/success-login.html"/>
 
 <c:if test="${loginError eq 'unknown_user'}">
     <h3>
